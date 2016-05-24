@@ -4,3 +4,5 @@ test-context.iml
 /.classpath
 /.project
 /.settings/
+
+integration-tests.iml

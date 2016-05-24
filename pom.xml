@@ -7,7 +7,7 @@
 	<name>integration-tests</name>
 
 	<dependencies>		
-            <!-- Spring -->
+        <!-- Spring -->
 			
 
         <!-- Test -->
