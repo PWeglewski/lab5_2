@@ -29,8 +29,8 @@ import java.sql.Driver;
 //określa gdzie szukać klas definiujących repozytoria Spring Data.
 public class PersistenceConfig {
     public static final String SQL_SCHEMA_SCRIPT_PATH = "sql/schema-script.sql";
-    public static final String DATA_SCRIPT_FILENAME_SUFFIX = ".sql";
-    public static final String SQL_FOLDER_NAME = "sql";
+    public static final String DATA_SCRIPT_FILENAME_SUFFIX = "-data-script.sql";
+    public static final String SQL_FOLDER_NAME = "sql/";
     private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceConfig.class);
     @Value("${database.url}")
     private String databaseUrl;
