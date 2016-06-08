@@ -13,9 +13,11 @@ import static org.junit.Assert.assertEquals;
 
 public class PersonRepositoryIntegrationTest extends IntegrationTest {
 
-    public static final long UPDATE_TEST_PERSON_ID = 3L;
+    public static final long UPDATE_TEST_PERSON_ID = 3000L;
     public static final String UPDATE_TEST_PERSON_NEW_FIRST_NAME = "Janusz";
     public static final String UPDATE_TEST_PERSON_NEW_LAST_NAME = "Testowy";
+
+    public static final long DELETE_TEST_PERSON_ID = 4000L;
 
     @Autowired
     private PersonRepository personRepository;
@@ -38,7 +40,7 @@ public class PersonRepositoryIntegrationTest extends IntegrationTest {
     }
 
     @Test
-    public void testUpdateNewPerson() {
+    public void testUpdatePerson() {
         // given
         Person person = personRepository.findOne(UPDATE_TEST_PERSON_ID);
 
@@ -53,6 +55,20 @@ public class PersonRepositoryIntegrationTest extends IntegrationTest {
         assertThat(updatedPerson.getFirstName()).isEqualTo(UPDATE_TEST_PERSON_NEW_FIRST_NAME);
         assertThat(updatedPerson.getLastName()).isEqualTo(UPDATE_TEST_PERSON_NEW_LAST_NAME);
 
+    }
+
+    @Test
+    public void testDeletePerson(){
+        // given
+        Person person = personRepository.findOne(DELETE_TEST_PERSON_ID);
+        assertThat(person).isNotNull();
+
+        // when
+        personRepository.delete(person);
+
+        // then
+        person = personRepository.findOne(DELETE_TEST_PERSON_ID);
+        assertThat(person).isNull();
     }
 
     private Person a(PersonBuilder builder) {
