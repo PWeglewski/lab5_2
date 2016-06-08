@@ -1,7 +1,6 @@
 package edu.iis.mto.integrationtest.repository;
 
 import edu.iis.mto.integrationtest.model.Person;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,11 +12,14 @@ import static org.junit.Assert.assertEquals;
 
 public class PersonRepositoryIntegrationTest extends IntegrationTest {
 
-    public static final long UPDATE_TEST_PERSON_ID = 3000L;
-    public static final String UPDATE_TEST_PERSON_NEW_FIRST_NAME = "Janusz";
-    public static final String UPDATE_TEST_PERSON_NEW_LAST_NAME = "Testowy";
+    private static final long UPDATE_TEST_PERSON_ID = 3000L;
+    private static final String UPDATE_TEST_PERSON_NEW_FIRST_NAME = "Janusz";
+    private static final String UPDATE_TEST_PERSON_NEW_LAST_NAME = "Testowy";
 
-    public static final long DELETE_TEST_PERSON_ID = 4000L;
+    private static final long DELETE_TEST_PERSON_ID = 4000L;
+
+    private static final int FIND_BY_FIRST_NAME_TEST_LIST_SIZE = 5;
+    private static final String FIND_BY_FIRST_NAME_TEST_NAME = "Mieczyslaw";
 
     @Autowired
     private PersonRepository personRepository;
@@ -58,7 +60,7 @@ public class PersonRepositoryIntegrationTest extends IntegrationTest {
     }
 
     @Test
-    public void testDeletePerson(){
+    public void testDeletePerson() {
         // given
         Person person = personRepository.findOne(DELETE_TEST_PERSON_ID);
         assertThat(person).isNotNull();
@@ -69,6 +71,18 @@ public class PersonRepositoryIntegrationTest extends IntegrationTest {
         // then
         person = personRepository.findOne(DELETE_TEST_PERSON_ID);
         assertThat(person).isNull();
+    }
+
+    @Test
+    public void testFindByFirstNameLike() {
+        // given
+        List<Person> personList;
+
+        // when
+        personList = personRepository.findByFirstNameLike(FIND_BY_FIRST_NAME_TEST_NAME);
+
+        // then
+        assertThat(personList.size()).isEqualTo(FIND_BY_FIRST_NAME_TEST_LIST_SIZE);
     }
 
     private Person a(PersonBuilder builder) {
