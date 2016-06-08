@@ -6,3 +6,4 @@ test-context.iml
 /.settings/
 
 integration-tests.iml
+integration-tests.plan
