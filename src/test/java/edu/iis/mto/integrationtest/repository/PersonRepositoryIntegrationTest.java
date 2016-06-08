@@ -1,6 +1,7 @@
 package edu.iis.mto.integrationtest.repository;
 
 import edu.iis.mto.integrationtest.model.Person;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 public class PersonRepositoryIntegrationTest extends IntegrationTest {
+
+    public static final long UPDATE_TEST_PERSON_ID = 3L;
+    public static final String UPDATE_TEST_PERSON_NEW_FIRST_NAME = "Janusz";
+    public static final String UPDATE_TEST_PERSON_NEW_LAST_NAME = "Testowy";
 
     @Autowired
     private PersonRepository personRepository;
@@ -30,6 +35,24 @@ public class PersonRepositoryIntegrationTest extends IntegrationTest {
         assertEquals(count + 1, personRepository.count());
         assertEquals("Mancini", personRepository.findOne(count + 1)
                 .getLastName());
+    }
+
+    @Test
+    public void testUpdateNewPerson() {
+        // given
+        Person person = personRepository.findOne(UPDATE_TEST_PERSON_ID);
+
+        //when
+        person.setFirstName(UPDATE_TEST_PERSON_NEW_FIRST_NAME);
+        person.setLastName(UPDATE_TEST_PERSON_NEW_LAST_NAME);
+        personRepository.save(person);
+        Person updatedPerson = personRepository.findOne(UPDATE_TEST_PERSON_ID);
+
+        //then
+        assertThat(updatedPerson.getId()).isEqualTo(UPDATE_TEST_PERSON_ID);
+        assertThat(updatedPerson.getFirstName()).isEqualTo(UPDATE_TEST_PERSON_NEW_FIRST_NAME);
+        assertThat(updatedPerson.getLastName()).isEqualTo(UPDATE_TEST_PERSON_NEW_LAST_NAME);
+
     }
 
     private Person a(PersonBuilder builder) {
